@@ -31,10 +31,11 @@ import (
 
 	"github.com/google/gnxi/utils"
 	"github.com/google/gnxi/utils/credentials"
-	"github.com/google/gnxi/utils/xpath"
+	"github.com/dzhangalibaba/gnxi/utils/xpath"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )
+
 
 type arrayFlags []string
 
@@ -51,6 +52,7 @@ var (
 	deleteOpt  arrayFlags
 	replaceOpt arrayFlags
 	updateOpt  arrayFlags
+	pathTarget = flag.String("xpath_target", "CONFIG_DB", "name of the target for which the path is a member")
 	targetAddr = flag.String("target_addr", "localhost:10161", "The target address in the format of host:port")
 	targetName = flag.String("target_name", "hostname.com", "The target name use to verify the hostname returned by TLS handshake")
 	timeOut    = flag.Duration("time_out", 10*time.Second, "Timeout for the Get request, 10 seconds by default")
@@ -145,7 +147,12 @@ func main() {
 	replaceList := buildPbUpdateList(replaceOpt)
 	updateList := buildPbUpdateList(updateOpt)
 
+	var prefix pb.Path
+	prefix.Target = *pathTarget
+
+
 	setRequest := &pb.SetRequest{
+		Prefix:    &prefix,
 		Delete:  deleteList,
 		Replace: replaceList,
 		Update:  updateList,

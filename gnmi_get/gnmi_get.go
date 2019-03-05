@@ -29,7 +29,7 @@ import (
 
 	"github.com/google/gnxi/utils"
 	"github.com/google/gnxi/utils/credentials"
-	"github.com/jipanyang/gnxi/utils/xpath"
+	"github.com/dzhangalibaba/gnxi/utils/xpath"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )
