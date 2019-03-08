@@ -88,7 +88,9 @@ func splitPath(str string) ([]string, error) {
 	for end < len(str) {
 		switch str[end] {
 		case '/':
-			if !insideBrackets {
+			if (end > 0 && str[end - 1] == '\\') {
+				str = str[0: end - 1] + str[end:]
+			} else if !insideBrackets {
 				// Current '/' is a valid path element
 				// separator.
 				if end > begin {
